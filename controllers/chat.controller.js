@@ -37,7 +37,7 @@ export const chatCreateImage = async (req, res) => {
       {
         prompt: prompt,
         n: 1,
-        size: "512x512",
+        size: "256x256",
       },
       {
         headers: {
