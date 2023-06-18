@@ -27,3 +27,32 @@ export const chatCompletion = async (req, res) => {
     });
   }
 };
+
+export const chatCreateImage = async (req, res) => {
+  try {
+    const { prompt } = req.body;
+
+    const answer = await axios.post(
+      "https://api.openai.com/v1/images/generations",
+      {
+        prompt: prompt,
+        n: 1,
+        size: "512x512",
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+        },
+      }
+    );
+
+    const image = answer.data.data[0].url;
+
+    res.status(200).json({ image });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
